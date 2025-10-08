@@ -101,8 +101,8 @@ const Header = () => {
       animate="visible"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-black/80 backdrop-blur-md border-b border-white/10"
-          : "bg-transparent"
+          ? "bg-[var(--bg-primary)]/95 backdrop-blur-md border-b border-[var(--border-primary)]"
+          : "bg-[var(--bg-primary)]/80 backdrop-blur-sm"
       }`}
     >
       <div className="container mx-auto px-6 py-4">
@@ -137,7 +137,7 @@ const Header = () => {
                         ? handleDownloadClick
                         : undefined
                     }
-                    className="text-white hover:text-[var(--accent-primary)] transition-colors duration-300 hover:bg-transparent cursor-pointer"
+                    className="text-[var(--text-white)] hover:text-[var(--accent-primary)] transition-colors duration-300 hover:bg-transparent cursor-pointer"
                   >
                     {item.title}
                   </Button>
@@ -145,7 +145,7 @@ const Header = () => {
                   <Button
                     variant="ghost"
                     onClick={() => scrollToSection(item.sectionId)}
-                    className="text-white hover:text-[var(--accent-primary)] transition-colors duration-300 hover:bg-transparent cursor-pointer"
+                    className="text-[var(--text-white)] hover:text-[var(--accent-primary)] transition-colors duration-300 hover:bg-transparent cursor-pointer"
                   >
                     {item.title}
                   </Button>
@@ -165,7 +165,7 @@ const Header = () => {
                   <Button
                     variant="ghost"
                     size="lg"
-                    className="text-white hover:text-[var(--accent-primary)] cursor-pointer h-12 w-12 relative"
+                    className="text-[var(--text-white)] hover:text-[var(--accent-primary)] cursor-pointer h-12 w-12 relative"
                   >
                     <Menu className="h-6 w-6 relative" />
                   </Button>
@@ -173,11 +173,13 @@ const Header = () => {
               </SheetTrigger>
               <SheetContent
                 side="top"
-                className="bg-black/95 backdrop-blur-md border-b border-white/10"
+                className="bg-[var(--bg-primary)]/95 backdrop-blur-md border-b border-[var(--border-primary)]"
               >
                 <SheetHeader>
-                  <SheetTitle className="text-white text-left">Меню</SheetTitle>
-                  <SheetDescription className="text-white/70 text-left">
+                  <SheetTitle className="text-[var(--text-white)] text-left">
+                    Меню
+                  </SheetTitle>
+                  <SheetDescription className="text-[var(--text-white)]/70 text-left">
                     Навигация по сайту
                   </SheetDescription>
                 </SheetHeader>
@@ -203,7 +205,7 @@ const Header = () => {
                               ? handleDownloadClick
                               : () => setIsMenuOpen(false)
                           }
-                          className="text-white hover:text-[var(--accent-primary)] transition-colors duration-300 hover:bg-white/10 justify-start text-left h-12 w-full"
+                          className="text-[var(--text-white)] hover:text-[var(--accent-primary)] transition-colors duration-300 hover:bg-[var(--text-white)]/10 justify-start text-left h-12 w-full"
                         >
                           {item.title}
                         </Button>
@@ -211,7 +213,7 @@ const Header = () => {
                         <Button
                           variant="ghost"
                           onClick={() => scrollToSection(item.sectionId)}
-                          className="text-white hover:text-[var(--accent-primary)] transition-colors duration-300 hover:bg-white/10 justify-start text-left h-12 w-full"
+                          className="text-[var(--text-white)] hover:text-[var(--accent-primary)] transition-colors duration-300 hover:bg-[var(--text-white)]/10 justify-start text-left h-12 w-full"
                         >
                           {item.title}
                         </Button>

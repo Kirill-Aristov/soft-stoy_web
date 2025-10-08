@@ -10,9 +10,9 @@ const AdvantagesSection = () => {
       description:
         "Отслеживание всех изменений в документах с возможностью возврата к предыдущим версиям",
       icon: (
-        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
+        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-primary)]/80 flex items-center justify-center">
           <svg
-            className="w-12 h-12 text-white"
+            className="w-12 h-12 text-[var(--text-white)]"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -27,9 +27,9 @@ const AdvantagesSection = () => {
       description:
         "Централизованное управление всеми аспектами проекта от планирования до реализации",
       icon: (
-        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center">
+        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-[var(--accent-secondary)] to-[var(--accent-secondary)]/80 flex items-center justify-center">
           <svg
-            className="w-12 h-12 text-white"
+            className="w-12 h-12 text-[var(--text-white)]"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -44,9 +44,9 @@ const AdvantagesSection = () => {
       description:
         "Комплексная база знаний по расчетам и разработке для повышения эффективности работы",
       icon: (
-        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
+        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-[var(--accent-primary)]/80 to-[var(--accent-secondary)]/80 flex items-center justify-center">
           <svg
-            className="w-12 h-12 text-white"
+            className="w-12 h-12 text-[var(--text-white)]"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -61,9 +61,9 @@ const AdvantagesSection = () => {
       description:
         "Системный подход к созданию и контролю технической документации проекта",
       icon: (
-        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center">
+        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-[var(--accent-secondary)]/80 to-[var(--accent-primary)]/80 flex items-center justify-center">
           <svg
-            className="w-12 h-12 text-white"
+            className="w-12 h-12 text-[var(--text-white)]"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -111,7 +111,10 @@ const AdvantagesSection = () => {
   };
 
   return (
-    <section id="advantages" className="py-20 px-6">
+    <section
+      id="advantages"
+      className="py-20 px-6 bg-gradient-to-br from-white via-[var(--bg-secondary)] to-[var(--bg-tertiary)]"
+    >
       <div className="container mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -159,13 +162,13 @@ const AdvantagesSection = () => {
                 </div>
                 <motion.h3
                   variants={itemVariants}
-                  className="text-2xl lg:text-3xl font-semibold text-white"
+                  className="text-2xl lg:text-3xl font-semibold text-[var(--text-primary)]"
                 >
                   {advantage.title}
                 </motion.h3>
                 <motion.p
                   variants={itemVariants}
-                  className="text-white/80 leading-relaxed text-lg"
+                  className="text-[var(--text-secondary)] leading-relaxed text-lg"
                 >
                   {advantage.description}
                 </motion.p>

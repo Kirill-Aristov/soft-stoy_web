@@ -116,7 +116,10 @@ const PricingSection = () => {
   };
 
   return (
-    <section id="pricing" className="py-20 px-6">
+    <section
+      id="pricing"
+      className="py-20 px-6 bg-gradient-to-br from-[var(--bg-secondary)] via-white to-[var(--bg-tertiary)]"
+    >
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -139,7 +142,7 @@ const PricingSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-white/80 text-lg max-w-2xl mx-auto mb-8"
+            className="text-[var(--text-secondary)] text-lg max-w-2xl mx-auto mb-8"
           >
             Выберите оптимальный план для вашего бизнеса. Все планы включают
             полный доступ к основному функционалу.
@@ -155,7 +158,9 @@ const PricingSection = () => {
           >
             <span
               className={`text-lg ${
-                !isAnnual ? "text-white" : "text-white/60"
+                !isAnnual
+                  ? "text-[var(--text-primary)]"
+                  : "text-[var(--text-secondary)]"
               }`}
             >
               Ежемесячно
@@ -165,7 +170,9 @@ const PricingSection = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={`relative w-16 h-8 rounded-full transition-all duration-300 cursor-pointer ${
-                isAnnual ? "bg-[var(--accent-primary)]" : "bg-white/20"
+                isAnnual
+                  ? "bg-[var(--accent-secondary)]"
+                  : "bg-[var(--bg-tertiary)]"
               }`}
             >
               <motion.div
@@ -173,11 +180,15 @@ const PricingSection = () => {
                   x: isAnnual ? 36 : 4,
                 }}
                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                className="absolute top-1 w-6 h-6 bg-white rounded-full"
+                className="absolute top-1 w-6 h-6 bg-[var(--text-white)] rounded-full"
               />
             </motion.button>
             <span
-              className={`text-lg ${isAnnual ? "text-white" : "text-white/60"}`}
+              className={`text-lg ${
+                isAnnual
+                  ? "text-[var(--text-primary)]"
+                  : "text-[var(--text-secondary)]"
+              }`}
             >
               Ежегодно
             </span>
@@ -186,7 +197,7 @@ const PricingSection = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                className="bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] text-white px-3 py-1 rounded-full text-sm font-medium"
+                className="bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] text-[var(--text-white)] px-3 py-1 rounded-full text-sm font-medium"
               >
                 Скидка 20%
               </motion.span>
@@ -233,10 +244,12 @@ const PricingSection = () => {
                 transition={{ delay: 0.2 }}
                 className="text-center mb-8"
               >
-                <h3 className="text-2xl font-bold text-white mb-2">
+                <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2">
                   {plan.name}
                 </h3>
-                <p className="text-white/70 mb-6">{plan.description}</p>
+                <p className="text-[var(--text-secondary)] mb-6">
+                  {plan.description}
+                </p>
 
                 <div className="mb-4">
                   <motion.div
@@ -244,7 +257,7 @@ const PricingSection = () => {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3 }}
-                    className="text-4xl font-bold text-white mb-2"
+                    className="text-4xl font-bold text-[var(--text-primary)] mb-2"
                   >
                     {formatPrice(
                       isAnnual
@@ -255,7 +268,7 @@ const PricingSection = () => {
                     )}{" "}
                     ₽
                   </motion.div>
-                  <div className="text-white/60">
+                  <div className="text-[var(--text-secondary)]">
                     {isAnnual ? "в месяц при годовой оплате" : "в месяц"}
                   </div>
                   {isAnnual && (
@@ -288,9 +301,11 @@ const PricingSection = () => {
                     className="flex items-center gap-3"
                   >
                     <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[var(--accent-primary)] flex items-center justify-center">
-                      <Check className="w-3 h-3 text-white" />
+                      <Check className="w-3 h-3 text-[var(--text-white)]" />
                     </div>
-                    <span className="text-white/90">{feature}</span>
+                    <span className="text-[var(--text-secondary)]">
+                      {feature}
+                    </span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -306,13 +321,13 @@ const PricingSection = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-16 text-center"
         >
-          <div className="bg-gradient-to-r from-white/5 to-white/10 rounded-2xl p-8 border border-white/10">
+          <div className="bg-gradient-to-r from-[var(--bg-tertiary)]/50 to-[var(--bg-tertiary)]/80 rounded-2xl p-8 border border-[var(--border-primary)]">
             <motion.h3
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-2xl font-bold text-white mb-4"
+              className="text-2xl font-bold text-[var(--text-primary)] mb-4"
             >
               Особо предложение для крупных предприятий
             </motion.h3>
@@ -321,7 +336,7 @@ const PricingSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-white/80 text-lg mb-6 max-w-3xl mx-auto"
+              className="text-[var(--text-secondary)] text-lg mb-6 max-w-3xl mx-auto"
             >
               Можем развернуть DOCIM локально на ваших серверах для максимальной
               безопасности и контроля данных. Свяжитесь с нами для подробностей
@@ -339,25 +354,25 @@ const PricingSection = () => {
                 >
                   <Button
                     size="lg"
-                    className="bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] text-white transition-transform duration-200"
+                    className="bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] text-[var(--text-white)] transition-transform duration-200"
                   >
                     Связаться с нами
                   </Button>
                 </motion.div>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-md bg-gray-900 border-gray-700">
+              <DialogContent className="sm:max-w-md bg-[var(--bg-secondary)] border-[var(--border-primary)]">
                 <DialogHeader>
-                  <DialogTitle className="text-white">
+                  <DialogTitle className="text-[var(--text-primary)]">
                     Связаться с нами
                   </DialogTitle>
-                  <DialogDescription className="text-gray-300">
+                  <DialogDescription className="text-[var(--text-secondary)]">
                     Оставьте свои контактные данные, и мы свяжемся с вами для
                     обсуждения условий локального развертывания.
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium text-white mb-2 block">
+                    <label className="text-sm font-medium text-[var(--text-primary)] mb-2 block">
                       Как к вам обращаться
                     </label>
                     <Input
@@ -366,11 +381,11 @@ const PricingSection = () => {
                       onChange={(e) =>
                         handleInputChange("name", e.target.value)
                       }
-                      className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
+                      className="bg-[var(--bg-tertiary)] border-[var(--border-primary)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]"
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-white mb-2 block">
+                    <label className="text-sm font-medium text-[var(--text-primary)] mb-2 block">
                       Телефон
                     </label>
                     <Input
@@ -380,11 +395,11 @@ const PricingSection = () => {
                       onChange={(e) =>
                         handleInputChange("phone", e.target.value)
                       }
-                      className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
+                      className="bg-[var(--bg-tertiary)] border-[var(--border-primary)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]"
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-white mb-2 block">
+                    <label className="text-sm font-medium text-[var(--text-primary)] mb-2 block">
                       Email
                     </label>
                     <Input
@@ -394,7 +409,7 @@ const PricingSection = () => {
                       onChange={(e) =>
                         handleInputChange("email", e.target.value)
                       }
-                      className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
+                      className="bg-[var(--bg-tertiary)] border-[var(--border-primary)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]"
                     />
                   </div>
                 </div>
@@ -402,13 +417,13 @@ const PricingSection = () => {
                   <Button
                     variant="outline"
                     onClick={() => setIsDialogOpen(false)}
-                    className="border-gray-600 text-gray-300 hover:bg-gray-800"
+                    className="border-[var(--border-primary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]"
                   >
                     Отмена
                   </Button>
                   <Button
                     onClick={handleFormSubmit}
-                    className="bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] text-white"
+                    className="bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] text-[var(--text-white)]"
                   >
                     Отправить
                   </Button>

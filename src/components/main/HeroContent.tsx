@@ -83,7 +83,7 @@ const HeroContent = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 py-20">
+    <section className="min-h-screen flex items-center justify-center px-4 py-20 bg-gradient-to-br from-[var(--bg-secondary)] via-white to-[var(--bg-tertiary)]">
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           variants={containerVariants}
@@ -94,11 +94,11 @@ const HeroContent = () => {
           <motion.div variants={itemVariants} className="space-y-4">
             <motion.h1
               variants={itemVariants}
-              className="text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
+              className="text-6xl lg:text-7xl font-bold text-[var(--text-primary)] mb-6 leading-tight"
             >
               <span className="gradient-text">DOCIM</span>
             </motion.h1>
-            <div className="space-y-3 text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
+            <div className="space-y-3 text-xl text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
               <motion.p variants={itemVariants}>
                 Инновационная платформа для управления
               </motion.p>
@@ -120,7 +120,7 @@ const HeroContent = () => {
               whileHover="hover"
               whileTap="tap"
               onClick={handleTryFreeClick}
-              className="px-8 py-4 bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] rounded-lg text-white font-medium hover:shadow-lg hover:shadow-[var(--accent-primary)]/30 transition-all duration-300 glow-effect flex items-center gap-3 cursor-pointer group"
+              className="px-8 py-4 bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] rounded-lg text-[var(--text-white)] font-medium hover:shadow-lg hover:shadow-[var(--accent-primary)]/30 transition-all duration-300 glow-effect flex items-center gap-3 cursor-pointer group"
             >
               <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
               Попробовать бесплатно
@@ -130,7 +130,7 @@ const HeroContent = () => {
               whileHover="hover"
               whileTap="tap"
               onClick={handleDemoClick}
-              className="px-8 py-4 border border-[var(--accent-primary)] rounded-lg text-white font-medium hover:bg-[var(--accent-primary)]/10 transition-all duration-300 cursor-pointer"
+              className="px-8 py-4 border border-[var(--accent-primary)] rounded-lg text-[var(--text-primary)] font-medium hover:bg-[var(--accent-primary)]/10 transition-all duration-300 cursor-pointer"
             >
               Смотреть демо
             </motion.button>
@@ -143,15 +143,19 @@ const HeroContent = () => {
           >
             <motion.div variants={statItemVariants} className="text-center">
               <div className="text-3xl font-bold gradient-text">500+</div>
-              <div className="text-white/70 text-sm">Проектов</div>
+              <div className="text-[var(--text-secondary)] text-sm">
+                Проектов
+              </div>
             </motion.div>
             <motion.div variants={statItemVariants} className="text-center">
               <div className="text-3xl font-bold gradient-text">50+</div>
-              <div className="text-white/70 text-sm">Компаний</div>
+              <div className="text-[var(--text-secondary)] text-sm">
+                Компаний
+              </div>
             </motion.div>
             <motion.div variants={statItemVariants} className="text-center">
               <div className="text-3xl font-bold gradient-text">99.9%</div>
-              <div className="text-white/70 text-sm">Uptime</div>
+              <div className="text-[var(--text-secondary)] text-sm">Uptime</div>
             </motion.div>
           </motion.div>
         </motion.div>

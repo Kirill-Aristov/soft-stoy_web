@@ -40,7 +40,7 @@ const Footer = () => {
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
       variants={containerVariants}
-      className="py-4 px-6 border-t border-white/10"
+      className="py-4 px-6 border-t border-[var(--border-primary)] bg-[var(--bg-primary)]"
     >
       <div className="container mx-auto">
         <motion.div
@@ -49,7 +49,9 @@ const Footer = () => {
         >
           {/* Контактная информация */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
-            <h3 className="text-xl font-semibold text-white mb-6">Контакты</h3>
+            <h3 className="text-xl font-semibold text-[var(--text-white)] mb-6">
+              Контакты
+            </h3>
             <div className="space-y-4">
               <motion.div
                 variants={itemVariants}
@@ -57,10 +59,12 @@ const Footer = () => {
               >
                 <Building className="w-5 h-5 text-[var(--accent-primary)] mt-1 flex-shrink-0" />
                 <div>
-                  <div className="text-white font-medium">
+                  <div className="text-[var(--text-white)] font-medium">
                     ООО &quot;СофтСтрой Проект&quot;
                   </div>
-                  <div className="text-white/70 text-sm">ИНН: 5981013198</div>
+                  <div className="text-[var(--text-white)]/70 text-sm">
+                    ИНН: 5981013198
+                  </div>
                 </div>
               </motion.div>
 
@@ -72,7 +76,7 @@ const Footer = () => {
                 <motion.a
                   href="mailto:info@softstroy-project.ru"
                   whileHover={{ scale: 1.05 }}
-                  className="text-white/90 hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
+                  className="text-[var(--text-white)]/90 hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
                 >
                   info@softstroy-project.ru
                 </motion.a>
@@ -84,7 +88,9 @@ const Footer = () => {
               >
                 <Clock className="w-5 h-5 text-[var(--accent-primary)] mt-1 flex-shrink-0" />
                 <div>
-                  <div className="text-white/90">Пн-Пт: 9:00 - 20:00 (МСК)</div>
+                  <div className="text-[var(--text-white)]/90">
+                    Пн-Пт: 9:00 - 20:00 (МСК)
+                  </div>
                 </div>
               </motion.div>
             </div>
@@ -92,13 +98,15 @@ const Footer = () => {
 
           {/* Поддержка */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
-            <h3 className="text-xl font-semibold text-white mb-6">Поддержка</h3>
+            <h3 className="text-xl font-semibold text-[var(--text-white)] mb-6">
+              Поддержка
+            </h3>
             <ul className="space-y-3">
               <motion.li variants={itemVariants}>
                 <motion.a
                   href="#"
                   whileHover={{ scale: 1.05, x: 5 }}
-                  className="text-white/80 hover:text-[var(--accent-primary)] transition-colors cursor-pointer inline-block"
+                  className="text-[var(--text-white)]/80 hover:text-[var(--accent-primary)] transition-colors cursor-pointer inline-block"
                 >
                   База знаний
                 </motion.a>
@@ -108,7 +116,7 @@ const Footer = () => {
                   onClick={() => setIsSupportOpen(true)}
                   whileHover={{ scale: 1.05, x: 5 }}
                   whileTap={{ scale: 0.95 }}
-                  className="text-white/80 hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
+                  className="text-[var(--text-white)]/80 hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
                 >
                   Техническая поддержка
                 </motion.button>
@@ -118,7 +126,7 @@ const Footer = () => {
                   onClick={() => setIsFeedbackOpen(true)}
                   whileHover={{ scale: 1.05, x: 5 }}
                   whileTap={{ scale: 0.95 }}
-                  className="text-white/80 hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
+                  className="text-[var(--text-white)]/80 hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
                 >
                   Обратная связь
                 </motion.button>
@@ -130,12 +138,12 @@ const Footer = () => {
         {/* Нижняя часть */}
         <motion.div
           variants={itemVariants}
-          className="pt-8 border-t border-white/10"
+          className="pt-8 border-t border-[var(--border-primary)]"
         >
           <div className="flex flex-col lg:flex-row justify-between items-center gap-2">
             <motion.div
               variants={itemVariants}
-              className="text-white/60 text-sm"
+              className="text-[var(--text-white)]/60 text-sm"
             >
               © 2025 ООО &quot;СофтСтрой Проект&quot;. Все права защищены.
             </motion.div>
@@ -143,14 +151,14 @@ const Footer = () => {
               <motion.a
                 href="#"
                 whileHover={{ scale: 1.05 }}
-                className="text-white/60 hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
+                className="text-[var(--text-white)]/60 hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
               >
                 Политика конфиденциальности
               </motion.a>
               <motion.a
                 href="#"
                 whileHover={{ scale: 1.05 }}
-                className="text-white/60 hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
+                className="text-[var(--text-white)]/60 hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
               >
                 Пользовательское соглашение
               </motion.a>

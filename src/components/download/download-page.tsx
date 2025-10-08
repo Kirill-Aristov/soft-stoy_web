@@ -61,7 +61,7 @@ const DownloadPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--bg-secondary)] via-[var(--bg-tertiary)] to-[var(--bg-secondary)] flex items-center justify-center px-4">
       {/* Кнопка назад */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -73,7 +73,7 @@ const DownloadPage = () => {
           onClick={handleBackClick}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+          className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-primary)]/10 backdrop-blur-md rounded-lg border border-[var(--border-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-primary)]/20 transition-all duration-300"
         >
           <ArrowLeft className="w-4 h-4" />
           Назад
@@ -88,7 +88,7 @@ const DownloadPage = () => {
       >
         <motion.div
           variants={itemVariants}
-          className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20"
+          className="bg-[var(--bg-secondary)]/80 backdrop-blur-md rounded-2xl p-8 border border-[var(--border-primary)]"
         >
           <motion.h1
             variants={itemVariants}
@@ -98,10 +98,10 @@ const DownloadPage = () => {
           </motion.h1>
 
           <motion.div variants={itemVariants} className="mb-8">
-            <h2 className="text-2xl font-semibold text-white mb-4">
+            <h2 className="text-2xl font-semibold text-[var(--text-primary)] mb-4">
               Продукт находится в разработке
             </h2>
-            <p className="text-gray-300 text-lg leading-relaxed">
+            <p className="text-[var(--text-secondary)] text-lg leading-relaxed">
               Мы работаем над созданием инновационного решения для вашего
               бизнеса. Оставьте свой email, чтобы получить уведомление о релизе
               продукта и быть среди первых, кто получит доступ к новым
@@ -122,7 +122,7 @@ const DownloadPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Введите ваш email"
                   whileFocus={{ scale: 1.02 }}
-                  className="w-full px-6 py-4 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-transparent transition-all duration-300"
+                  className="w-full px-6 py-4 bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded-lg text-[var(--text-primary)] placeholder-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-transparent transition-all duration-300"
                   required
                 />
               </motion.div>
@@ -134,7 +134,7 @@ const DownloadPage = () => {
                 >
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] hover:shadow-lg hover:shadow-[var(--accent-primary)]/30 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300"
+                    className="w-full bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] hover:shadow-lg hover:shadow-[var(--accent-primary)]/30 text-[var(--text-white)] font-semibold py-4 px-8 rounded-lg transition-all duration-300"
                   >
                     Получить уведомление о релизе
                   </Button>
@@ -150,17 +150,20 @@ const DownloadPage = () => {
             >
               <motion.div
                 variants={itemVariants}
-                className="text-[var(--accent-primary)] text-6xl mb-4"
+                className="text-[var(--accent-secondary)] text-6xl mb-4"
               >
                 ✓
               </motion.div>
               <motion.h3
                 variants={itemVariants}
-                className="text-xl font-semibold text-white mb-2"
+                className="text-xl font-semibold text-[var(--text-primary)] mb-2"
               >
                 Спасибо за интерес!
               </motion.h3>
-              <motion.p variants={itemVariants} className="text-gray-300">
+              <motion.p
+                variants={itemVariants}
+                className="text-[var(--text-secondary)]"
+              >
                 Мы отправим вам уведомление, как только продукт будет готов к
                 релизу.
               </motion.p>
