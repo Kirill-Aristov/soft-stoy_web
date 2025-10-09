@@ -1,163 +1,107 @@
 "use client";
 
-import { Play } from "lucide-react";
+import React from "react";
 import { motion } from "framer-motion";
-import { smoothPageTransition } from "@/lib/utils";
+import {
+  FileText,
+  Building2,
+  MapPin,
+  Calculator,
+  Ruler,
+  Hammer,
+  Wrench,
+  ClipboardCheck,
+  FileSpreadsheet,
+  Compass,
+  Layers,
+  Settings,
+} from "lucide-react";
+import Link from "next/link";
 
 const HeroContent = () => {
-  const handleTryFreeClick = () => {
-    smoothPageTransition("/download");
-  };
-
-  const handleDemoClick = () => {
-    // Можно добавить ссылку на демо или прокрутить к секции
-    console.log("Demo click");
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const buttonVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-    hover: {
-      scale: 1.05,
-      transition: {
-        duration: 0.2,
-      },
-    },
-    tap: {
-      scale: 0.95,
-    },
-  };
-
-  const statsVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const statItemVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
+  // Анимированные иконки для фона
+  const backgroundIcons = [
+    { Icon: FileText, delay: 0, x: 10, y: 5 },
+    { Icon: Building2, delay: 0.1, x: 10, y: 10 },
+    { Icon: MapPin, delay: 0.2, x: 10, y: 15 },
+    { Icon: Calculator, delay: 0.3, x: 10, y: 20 },
+    { Icon: Ruler, delay: 2, x: 10, y: 25 },
+    { Icon: Hammer, delay: 0.5, x: 10, y: 30 },
+    { Icon: Wrench, delay: 0.6, x: 10, y: 35 },
+    { Icon: ClipboardCheck, delay: 0.7, x: 10, y: 40 },
+    { Icon: FileSpreadsheet, delay: 0.8, x: 10, y: 45 },
+    { Icon: Compass, delay: 0.9, x: 10, y: 50 },
+    { Icon: Layers, delay: 1, x: 10, y: 55 },
+    { Icon: Settings, delay: 1.1, x: 10, y: 65 },
+  ];
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 py-20 bg-gradient-to-br from-[var(--bg-secondary)] via-white to-[var(--bg-tertiary)]">
-      <div className="max-w-4xl mx-auto text-center">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-8"
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden from-white via-gray-50 to-gray-100">
+      {/* Анимированный фон с иконками */}
+
+      {/* Основной контент */}
+      <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
+        {/* Главный заголовок */}
+        <motion.h1
+          className="text-8xl md:text-9xl lg:text-[12rem] font-black text-gray-900 mb-8 tracking-tight"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
         >
-          <motion.div variants={itemVariants} className="space-y-4">
-            <motion.h1
-              variants={itemVariants}
-              className="text-6xl lg:text-7xl font-bold text-[var(--text-primary)] mb-6 leading-tight"
-            >
-              <span className="gradient-text">DOCIM</span>
-            </motion.h1>
-            <div className="space-y-3 text-xl text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
-              <motion.p variants={itemVariants}>
-                Инновационная платформа для управления
-              </motion.p>
-              <motion.p variants={itemVariants}>
-                инженерными проектами и модернизации
-              </motion.p>
-              <motion.p variants={itemVariants}>
-                технологических процессов
-              </motion.p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+          <motion.span
+            className="block"
+            animate={{
+              textShadow: [
+                "0 0 0px rgba(0,0,0,0)",
+                "0 0 20px rgba(37, 99, 235, 0.3)",
+                "0 0 0px rgba(0,0,0,0)",
+              ],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           >
-            <motion.button
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-              onClick={handleTryFreeClick}
-              className="px-8 py-4 bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] rounded-lg text-[var(--text-white)] font-medium hover:shadow-lg hover:shadow-[var(--accent-primary)]/30 transition-all duration-300 glow-effect flex items-center gap-3 cursor-pointer group"
-            >
-              <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              Попробовать бесплатно
-            </motion.button>
-            <motion.button
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-              onClick={handleDemoClick}
-              className="px-8 py-4 border border-[var(--accent-primary)] rounded-lg text-[var(--text-primary)] font-medium hover:bg-[var(--accent-primary)]/10 transition-all duration-300 cursor-pointer"
-            >
-              Смотреть демо
-            </motion.button>
-          </motion.div>
+            DOCIM
+          </motion.span>
+        </motion.h1>
 
-          {/* Статистика */}
-          <motion.div
-            variants={statsVariants}
-            className="grid grid-cols-3 gap-6 pt-8"
+        {/* SEO-оптимизированный текст */}
+        <motion.div
+          className="max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          <h2 className="text-2xl md:text-3xl font-semibold text-gray-700 mb-6">
+            Профессиональная система управления
+            <br />
+            строительной документацией
+          </h2>
+
+          <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
+            Комплексное решение для автоматизации процессов создания, <br />
+            согласования и контроля разработки строительной документации <br />
+            Интегрированная платформа для архитекторов, инженеров, <br />
+            проектировщиков и строительных компаний
+          </p>
+        </motion.div>
+
+        {/* CTA кнопки */}
+        <motion.div
+          className="mt-12 flex flex-col sm:flex-row gap-4 justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1 }}
+        >
+          <motion.button
+            className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <motion.div variants={statItemVariants} className="text-center">
-              <div className="text-3xl font-bold gradient-text">500+</div>
-              <div className="text-[var(--text-secondary)] text-sm">
-                Проектов
-              </div>
-            </motion.div>
-            <motion.div variants={statItemVariants} className="text-center">
-              <div className="text-3xl font-bold gradient-text">50+</div>
-              <div className="text-[var(--text-secondary)] text-sm">
-                Компаний
-              </div>
-            </motion.div>
-            <motion.div variants={statItemVariants} className="text-center">
-              <div className="text-3xl font-bold gradient-text">99.9%</div>
-              <div className="text-[var(--text-secondary)] text-sm">Uptime</div>
-            </motion.div>
-          </motion.div>
+            <Link href="/download">Скачать программу</Link>
+          </motion.button>
         </motion.div>
       </div>
     </section>
