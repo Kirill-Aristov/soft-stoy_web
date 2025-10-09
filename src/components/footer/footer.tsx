@@ -28,7 +28,7 @@ const Footer = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     },
   };
@@ -40,7 +40,8 @@ const Footer = () => {
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
       variants={containerVariants}
-      className="py-4 px-6 border-t border-[var(--border-primary)] bg-[var(--bg-primary)]"
+      className="py-4 px-6 border-t border-[var(--text-tertiary)]/30"
+      style={{ background: "var(--bg-primary)" }}
     >
       <div className="container mx-auto">
         <motion.div
@@ -138,7 +139,7 @@ const Footer = () => {
         {/* Нижняя часть */}
         <motion.div
           variants={itemVariants}
-          className="pt-8 border-t border-[var(--border-primary)]"
+          className="pt-8 border-t border-[var(--text-tertiary)]/30"
         >
           <div className="flex flex-col lg:flex-row justify-between items-center gap-2">
             <motion.div

@@ -4,9 +4,41 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
-const Dialog = DialogPrimitive.Root;
+const Dialog = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>
+>(({ open, onOpenChange, ...props }, ref) => {
+  React.useEffect(() => {
+    const body = document.body;
+
+    if (open) {
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth;
+      body.style.setProperty("--scrollbar-width", `${scrollbarWidth}px`);
+      body.classList.add("dialog-open");
+    } else {
+      body.classList.remove("dialog-open");
+      body.style.removeProperty("--scrollbar-width");
+    }
+
+    return () => {
+      body.classList.remove("dialog-open");
+      body.style.removeProperty("--scrollbar-width");
+    };
+  }, [open]);
+
+  return (
+    <DialogPrimitive.Root
+      ref={ref}
+      open={open}
+      onOpenChange={onOpenChange}
+      {...props}
+    />
+  );
+});
+Dialog.displayName = "Dialog";
 
 const DialogTrigger = DialogPrimitive.Trigger;
 

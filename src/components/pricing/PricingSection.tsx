@@ -118,7 +118,7 @@ const PricingSection = () => {
   return (
     <section
       id="pricing"
-      className="py-20 px-6 bg-gradient-to-br from-[var(--bg-secondary)] via-white to-[var(--bg-tertiary)]"
+      className="py-20 px-6 bg-gradient-to-br from-[var(--bg-secondary)] via-[var(--bg-tertiary)] to-[var(--bg-secondary)]"
     >
       <div className="container mx-auto">
         <motion.div
@@ -133,7 +133,7 @@ const PricingSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl lg:text-5xl font-bold mb-6 gradient-text"
+            className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] bg-clip-text text-transparent"
           >
             Тарифные планы
           </motion.h2>
@@ -171,8 +171,8 @@ const PricingSection = () => {
               whileTap={{ scale: 0.95 }}
               className={`relative w-16 h-8 rounded-full transition-all duration-300 cursor-pointer ${
                 isAnnual
-                  ? "bg-[var(--accent-secondary)]"
-                  : "bg-[var(--bg-tertiary)]"
+                  ? "bg-gradient-to-r from-[var(--accent-secondary)] to-[var(--accent-primary)]"
+                  : "bg-[var(--bg-quaternary)]"
               }`}
             >
               <motion.div
@@ -216,11 +216,17 @@ const PricingSection = () => {
             <motion.div
               key={plan.name}
               variants={cardVariants}
-              whileHover={{ scale: 1.02, y: -5 }}
-              className={`relative card-gradient rounded-2xl p-8 transition-all duration-300 cursor-pointer ${
+              whileHover={{
+                scale: 1.02,
+                y: -5,
+                boxShadow: plan.popular
+                  ? "0 0 20px rgba(37, 99, 235, 0.2), 0 20px 25px -5px rgba(0, 0, 0, 0.1)"
+                  : "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+              }}
+              className={`relative bg-[var(--bg-secondary)] border border-[var(--text-tertiary)]/30 rounded-[20px] shadow-lg p-8 cursor-pointer ${
                 plan.popular
-                  ? "glow-border ring-2 ring-[var(--accent-primary)]/50"
-                  : "border border-white/10 hover:border-[var(--accent-primary)]/50"
+                  ? "shadow-[0_0_20px_rgba(37,99,235,0.2)] ring-2 ring-[var(--accent-primary)]/20"
+                  : ""
               }`}
             >
               {plan.popular && (
@@ -321,7 +327,7 @@ const PricingSection = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-16 text-center"
         >
-          <div className="bg-gradient-to-r from-[var(--bg-tertiary)]/50 to-[var(--bg-tertiary)]/80 rounded-2xl p-8 border border-[var(--border-primary)]">
+          <div className="bg-gradient-to-r from-[var(--bg-tertiary)]/50 to-[var(--bg-tertiary)]/80 rounded-2xl p-8 border border-[var(--text-tertiary)]/30">
             <motion.h3
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -354,13 +360,13 @@ const PricingSection = () => {
                 >
                   <Button
                     size="lg"
-                    className="bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] text-[var(--text-white)] transition-transform duration-200"
+                    className="bg-[var(--accent-primary)] text-[var(--text-white)] font-semibold rounded-xl shadow-md text-lg hover:shadow-lg transition-all duration-300"
                   >
                     Связаться с нами
                   </Button>
                 </motion.div>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-md bg-[var(--bg-secondary)] border-[var(--border-primary)]">
+              <DialogContent className="sm:max-w-md bg-[var(--bg-secondary)] border-[var(--text-tertiary)]/30">
                 <DialogHeader>
                   <DialogTitle className="text-[var(--text-primary)]">
                     Связаться с нами
@@ -381,7 +387,7 @@ const PricingSection = () => {
                       onChange={(e) =>
                         handleInputChange("name", e.target.value)
                       }
-                      className="bg-[var(--bg-tertiary)] border-[var(--border-primary)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]"
+                      className="bg-[var(--bg-quaternary)] border-[var(--text-tertiary)]/30 text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)]"
                     />
                   </div>
                   <div>
@@ -395,7 +401,7 @@ const PricingSection = () => {
                       onChange={(e) =>
                         handleInputChange("phone", e.target.value)
                       }
-                      className="bg-[var(--bg-tertiary)] border-[var(--border-primary)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]"
+                      className="bg-[var(--bg-quaternary)] border-[var(--text-tertiary)]/30 text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)]"
                     />
                   </div>
                   <div>
@@ -409,7 +415,7 @@ const PricingSection = () => {
                       onChange={(e) =>
                         handleInputChange("email", e.target.value)
                       }
-                      className="bg-[var(--bg-tertiary)] border-[var(--border-primary)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]"
+                      className="bg-[var(--bg-quaternary)] border-[var(--text-tertiary)]/30 text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)]"
                     />
                   </div>
                 </div>
@@ -417,13 +423,13 @@ const PricingSection = () => {
                   <Button
                     variant="outline"
                     onClick={() => setIsDialogOpen(false)}
-                    className="border-[var(--border-primary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]"
+                    className="border-[var(--text-tertiary)]/30 text-[var(--text-secondary)] hover:bg-[var(--bg-quaternary)]"
                   >
                     Отмена
                   </Button>
                   <Button
                     onClick={handleFormSubmit}
-                    className="bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] text-[var(--text-white)]"
+                    className="bg-[var(--accent-primary)] text-[var(--text-white)] font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
                   >
                     Отправить
                   </Button>

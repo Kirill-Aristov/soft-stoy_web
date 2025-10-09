@@ -3,30 +3,27 @@ import Header from "@/components/header/header";
 import PricingSection from "@/components/pricing/PricingSection";
 import Footer from "@/components/footer/footer";
 import HeroContent from "@/components/main/HeroContent";
-import PageTransition from "@/components/shared/PageTransition";
 
 export default function Home() {
   return (
-    <PageTransition>
-      <div className="min-h-screen">
-        {/* Навигация */}
-        <Header />
+    <div className="min-h-screen">
+      {/* Навигация */}
+      <Header />
 
-        {/* Основной контент */}
-        <main>
-          {/* Герой-секция */}
-          <HeroContent />
+      {/* Основной контент */}
+      <main>
+        {/* Герой-секция */}
+        <HeroContent />
 
-          {/* Преимущества */}
-          <AdvantagesSection />
+        {/* Преимущества */}
+        <AdvantagesSection />
 
-          {/* Тарифные планы */}
-          <PricingSection />
-        </main>
+        {/* Тарифные планы */}
+        <PricingSection />
+      </main>
 
-        {/* Футер */}
-        <Footer />
-      </div>
-    </PageTransition>
+      {/* Футер */}
+      <Footer />
+    </div>
   );
 }

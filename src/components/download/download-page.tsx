@@ -4,20 +4,48 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/shared/ui/button";
-import { smoothPageTransition } from "@/lib/utils";
+import { smoothPageTransition } from "@/shared/lib/utils";
+import { validateEmail } from "@/shared/utils/validate";
 
 const DownloadPage = () => {
   const [email, setEmail] = useState("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setIsSubmitted(true);
-      // Здесь можно добавить логику отправки email
+
+    if (!validateEmail(email)) {
+      setEmailErrorMessage("Некорректный email");
+      return;
+    }
+
+    setIsLoading(true);
+    setEmailErrorMessage("");
+
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+      } else {
+        const error = await response.json();
+        setEmailErrorMessage(error.error || "Произошла ошибка");
+      }
+    } catch (error) {
+      console.error("Ошибка при отправке:", error);
+      setEmailErrorMessage("Произошла ошибка при отправке");
+    } finally {
+      setIsLoading(false);
     }
   };
-
   const handleBackClick = () => {
     smoothPageTransition("/");
   };
@@ -29,7 +57,7 @@ const DownloadPage = () => {
       scale: 1,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
+        ease: "easeOut" as const,
         staggerChildren: 0.2,
       },
     },
@@ -42,7 +70,7 @@ const DownloadPage = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     },
   };
@@ -54,7 +82,7 @@ const DownloadPage = () => {
       scale: 1,
       transition: {
         duration: 0.8,
-        ease: "easeOut",
+        ease: "easeOut" as const,
         staggerChildren: 0.2,
       },
     },
@@ -73,7 +101,7 @@ const DownloadPage = () => {
           onClick={handleBackClick}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-primary)]/10 backdrop-blur-md rounded-lg border border-[var(--border-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-primary)]/20 transition-all duration-300"
+          className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-primary)]/10 backdrop-blur-md rounded-lg border border-[var(--text-tertiary)]/30 text-[var(--text-primary)] hover:bg-[var(--bg-primary)]/20 transition-all duration-300"
         >
           <ArrowLeft className="w-4 h-4" />
           Назад
@@ -88,11 +116,11 @@ const DownloadPage = () => {
       >
         <motion.div
           variants={itemVariants}
-          className="bg-[var(--bg-secondary)]/80 backdrop-blur-md rounded-2xl p-8 border border-[var(--border-primary)]"
+          className="bg-[var(--bg-secondary)]/80 backdrop-blur-md rounded-2xl p-8 border border-[var(--text-tertiary)]/30"
         >
           <motion.h1
             variants={itemVariants}
-            className="text-4xl font-bold gradient-text mb-6"
+            className="text-4xl font-bold bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] bg-clip-text text-transparent mb-6"
           >
             DOCIM
           </motion.h1>
@@ -122,7 +150,7 @@ const DownloadPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Введите ваш email"
                   whileFocus={{ scale: 1.02 }}
-                  className="w-full px-6 py-4 bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded-lg text-[var(--text-primary)] placeholder-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-transparent transition-all duration-300"
+                  className="w-full px-6 py-4 bg-[var(--bg-tertiary)] border border-[var(--text-tertiary)]/30 rounded-lg text-[var(--text-primary)] placeholder-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-transparent transition-all duration-300"
                   required
                 />
               </motion.div>
@@ -134,10 +162,16 @@ const DownloadPage = () => {
                 >
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] hover:shadow-lg hover:shadow-[var(--accent-primary)]/30 text-[var(--text-white)] font-semibold py-4 px-8 rounded-lg transition-all duration-300"
+                    disabled={isLoading}
+                    className="w-full bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] hover:shadow-lg hover:shadow-[var(--accent-primary)]/30 text-[var(--text-white)] font-semibold py-4 px-8 rounded-lg transition-all duration-300 disabled:opacity-50"
                   >
-                    Получить уведомление о релизе
+                    {isLoading
+                      ? "Отправка..."
+                      : "Получить уведомление о релизе"}
                   </Button>
+                  {emailErrorMessage && (
+                    <p className="text-red-500 text-sm">{emailErrorMessage}</p>
+                  )}
                 </motion.div>
               </motion.div>
             </motion.form>

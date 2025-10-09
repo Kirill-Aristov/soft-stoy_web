@@ -10,7 +10,7 @@ const AdvantagesSection = () => {
       description:
         "Отслеживание всех изменений в документах с возможностью возврата к предыдущим версиям",
       icon: (
-        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-primary)]/80 flex items-center justify-center">
+        <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-secondary)] flex items-center justify-center glow-effect">
           <svg
             className="w-12 h-12 text-[var(--text-white)]"
             fill="currentColor"
@@ -27,7 +27,7 @@ const AdvantagesSection = () => {
       description:
         "Централизованное управление всеми аспектами проекта от планирования до реализации",
       icon: (
-        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-[var(--accent-secondary)] to-[var(--accent-secondary)]/80 flex items-center justify-center">
+        <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--accent-secondary)] to-[var(--accent-primary)] flex items-center justify-center glow-success">
           <svg
             className="w-12 h-12 text-[var(--text-white)]"
             fill="currentColor"
@@ -44,7 +44,7 @@ const AdvantagesSection = () => {
       description:
         "Комплексная база знаний по расчетам и разработке для повышения эффективности работы",
       icon: (
-        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-[var(--accent-primary)]/80 to-[var(--accent-secondary)]/80 flex items-center justify-center">
+        <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--accent-tertiary)]/90 to-[var(--accent-primary)]/90 flex items-center justify-center glow-subtle">
           <svg
             className="w-12 h-12 text-[var(--text-white)]"
             fill="currentColor"
@@ -61,7 +61,7 @@ const AdvantagesSection = () => {
       description:
         "Системный подход к созданию и контролю технической документации проекта",
       icon: (
-        <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-[var(--accent-secondary)]/80 to-[var(--accent-primary)]/80 flex items-center justify-center">
+        <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--accent-primary)]/90 to-[var(--accent-tertiary)]/90 flex items-center justify-center glow-effect">
           <svg
             className="w-12 h-12 text-[var(--text-white)]"
             fill="currentColor"
@@ -92,7 +92,7 @@ const AdvantagesSection = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     },
   };
@@ -105,7 +105,7 @@ const AdvantagesSection = () => {
       rotate: 0,
       transition: {
         duration: 0.8,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     },
   };
@@ -113,7 +113,7 @@ const AdvantagesSection = () => {
   return (
     <section
       id="advantages"
-      className="py-20 px-6 bg-gradient-to-br from-white via-[var(--bg-secondary)] to-[var(--bg-tertiary)]"
+      className="py-20 px-6 bg-gradient-to-br from-[var(--bg-secondary)] via-[var(--bg-tertiary)] to-[var(--bg-secondary)]"
     >
       <div className="container mx-auto">
         <motion.h2
@@ -121,7 +121,7 @@ const AdvantagesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-4xl lg:text-5xl font-bold text-center mb-16 gradient-text"
+          className="text-4xl lg:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] bg-clip-text text-transparent"
         >
           Преимущества
         </motion.h2>
@@ -151,13 +151,13 @@ const AdvantagesSection = () => {
                 <div className="flex items-center gap-4">
                   <motion.div
                     variants={itemVariants}
-                    className="text-5xl font-bold gradient-text"
+                    className="text-5xl font-bold bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] bg-clip-text text-transparent"
                   >
                     {advantage.number}
                   </motion.div>
                   <motion.div
                     variants={itemVariants}
-                    className="h-px bg-gradient-to-r from-[var(--accent-primary)] to-transparent flex-1"
+                    className="h-px bg-gradient-to-r from-[var(--accent-primary)] via-[var(--accent-secondary)] to-transparent flex-1"
                   />
                 </div>
                 <motion.h3
@@ -168,7 +168,7 @@ const AdvantagesSection = () => {
                 </motion.h3>
                 <motion.p
                   variants={itemVariants}
-                  className="text-[var(--text-secondary)] leading-relaxed text-lg"
+                  className="text-[var(--text-tertiary)] leading-relaxed text-lg"
                 >
                   {advantage.description}
                 </motion.p>
@@ -189,7 +189,7 @@ const AdvantagesSection = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.5, duration: 0.6 }}
-                    className="absolute -inset-4 rounded-xl bg-gradient-to-r from-[var(--accent-primary)]/20 to-[var(--accent-secondary)]/20 blur-xl -z-10"
+                    className="absolute -inset-4 rounded-xl bg-gradient-to-r from-[var(--accent-primary)]/15 to-[var(--accent-secondary)]/10 blur-xl -z-10"
                   />
                   <motion.div
                     initial={{ opacity: 0, scale: 0 }}
