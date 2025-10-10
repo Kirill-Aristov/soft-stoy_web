@@ -48,22 +48,20 @@ export default function RootLayout({
                 m[i].l=1*new Date();
                 for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
                 k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-              })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104474452', 'ym');
-
-              ym(104474452, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+              })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104583132', 'ym');
+              ym(104583132, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
             `,
           }}
         />
         <noscript>
           <div>
             <img
-              src="https://mc.yandex.ru/watch/104474452"
+              src="https://mc.yandex.ru/watch/104583132"
               style={{ position: "absolute", left: "-9999px" }}
               alt=""
             />
           </div>
         </noscript>
-        {/* /Yandex.Metrika counter */}
       </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}

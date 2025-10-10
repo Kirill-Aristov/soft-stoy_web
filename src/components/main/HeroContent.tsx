@@ -2,39 +2,9 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import {
-  FileText,
-  Building2,
-  MapPin,
-  Calculator,
-  Ruler,
-  Hammer,
-  Wrench,
-  ClipboardCheck,
-  FileSpreadsheet,
-  Compass,
-  Layers,
-  Settings,
-} from "lucide-react";
 import Link from "next/link";
 
 const HeroContent = () => {
-  // Анимированные иконки для фона
-  const backgroundIcons = [
-    { Icon: FileText, delay: 0, x: 10, y: 5 },
-    { Icon: Building2, delay: 0.1, x: 10, y: 10 },
-    { Icon: MapPin, delay: 0.2, x: 10, y: 15 },
-    { Icon: Calculator, delay: 0.3, x: 10, y: 20 },
-    { Icon: Ruler, delay: 2, x: 10, y: 25 },
-    { Icon: Hammer, delay: 0.5, x: 10, y: 30 },
-    { Icon: Wrench, delay: 0.6, x: 10, y: 35 },
-    { Icon: ClipboardCheck, delay: 0.7, x: 10, y: 40 },
-    { Icon: FileSpreadsheet, delay: 0.8, x: 10, y: 45 },
-    { Icon: Compass, delay: 0.9, x: 10, y: 50 },
-    { Icon: Layers, delay: 1, x: 10, y: 55 },
-    { Icon: Settings, delay: 1.1, x: 10, y: 65 },
-  ];
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden from-white via-gray-50 to-gray-100">
       {/* Анимированный фон с иконками */}

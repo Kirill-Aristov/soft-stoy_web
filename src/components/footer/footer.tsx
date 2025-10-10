@@ -5,6 +5,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { TechnicalSupportForm } from "./technical-support-alert";
 import { FeedbackForm } from "./feedback-alert";
+import Image from "next/image";
 
 const Footer = () => {
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -46,7 +47,7 @@ const Footer = () => {
       <div className="container mx-auto">
         <motion.div
           variants={containerVariants}
-          className="grid sm:grid-cols-2 gap-8 my-8"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 my-8"
         >
           {/* Контактная информация */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
@@ -75,11 +76,11 @@ const Footer = () => {
               >
                 <Mail className="w-5 h-5 text-[var(--accent-primary)] flex-shrink-0" />
                 <motion.a
-                  href="mailto:info@softstroy-project.ru"
+                  href="mailto:info_docim@soft-stroypro.ru"
                   whileHover={{ scale: 1.05 }}
                   className="text-[var(--text-white)]/90 hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
                 >
-                  info@softstroy-project.ru
+                  info_docim@soft-stroypro.ru
                 </motion.a>
               </motion.div>
 
@@ -134,8 +135,33 @@ const Footer = () => {
               </motion.li>
             </ul>
           </motion.div>
-        </motion.div>
 
+          {/* Блок с логотипом ФСИ */}
+          <motion.div
+            variants={itemVariants}
+            className="sm:col-span-2 lg:col-span-1 lg:order-3"
+          >
+            <div className="flex flex-col sm:flex-row lg:flex-col items-center gap-4">
+              <div className="flex-shrink-0">
+                <Image
+                  src="/logo_fsi.png"
+                  alt="Фонд содействия инновациям"
+                  width={120}
+                  height={80}
+                  className="object-contain"
+                />
+              </div>
+              <div className="text-center sm:text-left lg:text-center">
+                <p className="text-[var(--text-white)]/80 text-sm leading-relaxed">
+                  Работа выполнена при поддержке гранта Фонда содействия
+                  инновациям, предоставленного в рамках программы «Студенческий
+                  стартап» федерального проекта «Платформа университетского
+                  технологического предпринимательства»
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
         {/* Нижняя часть */}
         <motion.div
           variants={itemVariants}

@@ -57,9 +57,9 @@ const AdvantagesSection = () => {
     },
     {
       number: "04",
-      title: "Ведение проекта разработки документации",
+      title: "Готовые шаблоны для ускорения процесса работы",
       description:
-        "Системный подход к созданию и контролю технической документации проекта",
+        "Система готовых шаблонов для быстрого создания документов и проектов",
       icon: (
         <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--accent-primary)]/90 to-[var(--accent-tertiary)]/90 flex items-center justify-center glow-effect">
           <svg
@@ -111,10 +111,7 @@ const AdvantagesSection = () => {
   };
 
   return (
-    <section
-      id="advantages"
-      className="py-20 px-6 bg-gradient-to-br from-[var(--bg-secondary)] via-[var(--bg-tertiary)] to-[var(--bg-secondary)]"
-    >
+    <section id="advantages" className="py-20 px-6">
       <div className="container mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
