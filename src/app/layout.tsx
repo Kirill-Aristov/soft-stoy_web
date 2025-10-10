@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
+import Image from "next/image";
 import "../shared/styles/globals.css";
 
 const inter = Inter({
@@ -16,12 +17,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DOCIM - Инновационная платформа для управления инженерными проектами",
+  title:
+    "DOCIM - Инновационная платформа для управления проектной документацией",
   description:
-    "Современная платформа для автоматизации инженерных процессов, модернизации технологических линий и управления проектами реконструкции",
+    "Современная платформа для автоматизации процессов создания, согласования и контроля разработки проектной документации",
   keywords:
-    "инженерные проекты, модернизация, автоматизация, DOCIM, технологические линии",
-  authors: [{ name: "DOCIM Team" }],
+    "инженерные проекты, проектная документация, автоматизация, DOCIM, строительная документация, электронный документооборот",
+  authors: [{ name: "ООО СофтСтрой Проект" }],
 };
 
 export const viewport: Viewport = {
@@ -55,8 +57,10 @@ export default function RootLayout({
         />
         <noscript>
           <div>
-            <img
+            <Image
               src="https://mc.yandex.ru/watch/104583132"
+              width={1}
+              height={1}
               style={{ position: "absolute", left: "-9999px" }}
               alt=""
             />

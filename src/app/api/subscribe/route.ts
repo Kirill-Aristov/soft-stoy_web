@@ -30,11 +30,16 @@ export async function POST(request: NextRequest) {
         success: true,
         message: "Email успешно добавлен в подписку",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Ошибка при добавлении подписчика:", error);
 
       // Обработка дубликата email
-      if (error.code === "ER_DUP_ENTRY") {
+      if (
+        error &&
+        typeof error === "object" &&
+        "code" in error &&
+        error.code === "ER_DUP_ENTRY"
+      ) {
         return NextResponse.json(
           {
             error: "Вы уже подписаны на рассылку",
@@ -45,7 +50,12 @@ export async function POST(request: NextRequest) {
       }
 
       // Обработка других ошибок базы данных
-      if (error.code === "ER_NO_SUCH_TABLE") {
+      if (
+        error &&
+        typeof error === "object" &&
+        "code" in error &&
+        error.code === "ER_NO_SUCH_TABLE"
+      ) {
         return NextResponse.json(
           {
             error: "Ошибка конфигурации базы данных",
