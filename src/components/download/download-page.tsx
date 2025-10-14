@@ -38,13 +38,13 @@ const DownloadPage = () => {
         setIsSubmitted(true);
       } else {
         const text = await response.text();
-        let errorData: any = null;
+        type ErrorResponse = { error?: string };
+        let parsed: ErrorResponse | null = null;
         try {
-          errorData = text ? JSON.parse(text) : null;
+          parsed = text ? (JSON.parse(text) as ErrorResponse) : null;
         } catch {}
         setEmailErrorMessage(
-          (errorData && errorData.error) ||
-            "Произошла ошибка (500). Повторите позже."
+          parsed?.error ?? "Произошла ошибка (500). Повторите позже."
         );
       }
     } catch (error) {

@@ -3,7 +3,6 @@ import Header from "@/components/header/header";
 import PricingSection from "@/components/pricing/PricingSection";
 import Footer from "@/components/footer/footer";
 import HeroContent from "@/components/main/HeroContent";
-import { notFound } from "next/navigation";
 
 export default function Home() {
   return (
