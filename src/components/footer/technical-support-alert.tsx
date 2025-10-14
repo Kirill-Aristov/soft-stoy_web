@@ -51,7 +51,7 @@ export const TechnicalSupportForm = ({
         setTimeout(() => {
           setShowSuccess(false);
           onOpenChange(false);
-        }, 2000);
+        }, 2500);
       }
     } catch (error) {
       console.error("Ошибка отправки:", error);

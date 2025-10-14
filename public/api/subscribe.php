@@ -28,12 +28,19 @@ $createSql = "CREATE TABLE IF NOT EXISTS users (
   PRIMARY KEY (id),
   UNIQUE KEY uniq_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
-$mysqli->query($createSql);
+if ($mysqli->query($createSql) === false) {
+  json_response(['error' => 'DB schema error'], 500);
+}
 
 // Вставляем email
 $stmt = $mysqli->prepare("INSERT INTO users (email) VALUES (?)");
-$stmt->bind_param('s', $email);
-if (!$stmt->execute()) {
+if ($stmt === false) {
+  json_response(['error' => 'DB prepare error'], 500);
+}
+if ($stmt->bind_param('s', $email) === false) {
+  json_response(['error' => 'DB bind error'], 500);
+}
+if ($stmt->execute() === false) {
   if ($mysqli->errno === 1062) {
     json_response(['error' => 'Вы уже подписаны на рассылку', 'code' => 'DUPLICATE_EMAIL'], 409);
   }

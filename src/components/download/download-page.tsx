@@ -37,8 +37,15 @@ const DownloadPage = () => {
       if (response.ok) {
         setIsSubmitted(true);
       } else {
-        const error = await response.json();
-        setEmailErrorMessage(error.error || "Произошла ошибка");
+        const text = await response.text();
+        let errorData: any = null;
+        try {
+          errorData = text ? JSON.parse(text) : null;
+        } catch {}
+        setEmailErrorMessage(
+          (errorData && errorData.error) ||
+            "Произошла ошибка (500). Повторите позже."
+        );
       }
     } catch (error) {
       console.error("Ошибка при отправке:", error);

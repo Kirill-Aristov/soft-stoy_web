@@ -14,6 +14,8 @@ import {
   DialogTrigger,
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
+import { apiUrl } from "@/shared/lib/api";
+import { validateEmail } from "@/shared/utils/validate";
 
 const PricingSection = () => {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -23,7 +25,10 @@ const PricingSection = () => {
     phone: "",
     email: "",
   });
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const plans = [
     {
       name: "Индивидуальный",
@@ -100,11 +105,53 @@ const PricingSection = () => {
     return monthlyPrice * 12 * 0.8; // 20% скидка
   };
 
-  const handleFormSubmit = () => {
-    // Здесь будет логика отправки формы
-    console.log("Отправка формы:", formData);
-    setIsDialogOpen(false);
-    setFormData({ name: "", phone: "", email: "" });
+  const handleFormSubmit = async () => {
+    setSubmitError("");
+    setSubmitSuccess(false);
+
+    if (!validateEmail(formData.email)) {
+      setSubmitError("Некорректный email");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch(apiUrl("/api/pricing"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          name: formData.name,
+          phone: formData.phone,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitSuccess(true);
+        setShowSuccess(true);
+        setFormData({ name: "", phone: "", email: "" });
+        setTimeout(() => {
+          setShowSuccess(false);
+          setIsDialogOpen(false);
+          setSubmitSuccess(false);
+        }, 2500);
+      } else {
+        const text = await response.text();
+        let data: unknown = null;
+        try {
+          data = text ? JSON.parse(text) : null;
+        } catch {}
+        const serverError =
+          data && typeof data === "object" && data !== null && "error" in data
+            ? (data as { error?: string }).error
+            : undefined;
+        setSubmitError(serverError || "Ошибка при отправке. Повторите позже.");
+      }
+    } catch {
+      setSubmitError("Сетевая ошибка. Повторите позже.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -425,16 +472,34 @@ const PricingSection = () => {
                   </Button>
                   <Button
                     onClick={handleFormSubmit}
-                    className="bg-[var(--accent-primary)] text-[var(--text-white)] font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+                    disabled={isSubmitting}
+                    className="bg-[var(--accent-primary)] text-[var(--text-white)] font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-60"
                   >
-                    Отправить
+                    {isSubmitting
+                      ? "Отправка..."
+                      : submitSuccess
+                      ? "Отправлено"
+                      : "Отправить"}
                   </Button>
                 </DialogFooter>
+                {submitError && (
+                  <p className="text-sm text-red-500 mt-2">{submitError}</p>
+                )}
               </DialogContent>
             </Dialog>
           </div>
         </motion.div>
       </div>
+      <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-green-600">Успешно!</DialogTitle>
+            <DialogDescription>
+              Ваше обращение отправлено. Мы свяжемся с вами в ближайшее время.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
