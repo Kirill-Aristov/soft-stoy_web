@@ -62,8 +62,6 @@
     @apply border-border;
   }
 
-  html {}
-
   body {
     @apply bg-background text-foreground antialiased;
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 50%, var(--bg-secondary) 100%);

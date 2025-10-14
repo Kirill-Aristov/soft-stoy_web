@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { apiUrl } from "@/shared/lib/api";
 
 interface TechnicalSupportFormProps {
   open: boolean;
@@ -33,7 +34,7 @@ export const TechnicalSupportForm = ({
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/support", {
+      const response = await fetch(apiUrl("/api/support"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -107,7 +108,6 @@ export const TechnicalSupportForm = ({
                 type="button"
                 variant="outline"
                 onClick={() => onOpenChange(false)}
-
               >
                 Отмена
               </Button>

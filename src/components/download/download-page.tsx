@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { smoothPageTransition } from "@/shared/lib/utils";
 import { validateEmail } from "@/shared/utils/validate";
+import { apiUrl } from "@/shared/lib/api";
 
 const DownloadPage = () => {
   const [email, setEmail] = useState("");
@@ -25,7 +26,7 @@ const DownloadPage = () => {
     setEmailErrorMessage("");
 
     try {
-      const response = await fetch("/api/subscribe", {
+      const response = await fetch(apiUrl("/api/subscribe"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

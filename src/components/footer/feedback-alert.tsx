@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { apiUrl } from "@/shared/lib/api";
 
 interface FeedbackFormProps {
   open: boolean;
@@ -30,7 +31,7 @@ export const FeedbackForm = ({ open, onOpenChange }: FeedbackFormProps) => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/support", {
+      const response = await fetch(apiUrl("/api/support"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
