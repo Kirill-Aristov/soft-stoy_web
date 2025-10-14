@@ -11,7 +11,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
-import { apiUrl } from "@/shared/lib/api";
 
 interface TechnicalSupportFormProps {
   open: boolean;
@@ -34,7 +33,7 @@ export const TechnicalSupportForm = ({
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(apiUrl("/api/support"), {
+      const response = await fetch("/api/support.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

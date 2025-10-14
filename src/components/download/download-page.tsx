@@ -6,7 +6,6 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { smoothPageTransition } from "@/shared/lib/utils";
 import { validateEmail } from "@/shared/utils/validate";
-import { apiUrl } from "@/shared/lib/api";
 
 const DownloadPage = () => {
   const [email, setEmail] = useState("");
@@ -26,30 +25,36 @@ const DownloadPage = () => {
     setEmailErrorMessage("");
 
     try {
-      const response = await fetch(apiUrl("/api/subscribe"), {
+      const response = await fetch("/api/subscribe.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
       });
-
       if (response.ok) {
         setIsSubmitted(true);
       } else {
-        const text = await response.text();
-        type ErrorResponse = { error?: string };
-        let parsed: ErrorResponse | null = null;
+        // безопасный парсинг тела ответа
+        const raw = await response.text();
+        let data: { error?: string; code?: string } | null = null;
         try {
-          parsed = text ? (JSON.parse(text) as ErrorResponse) : null;
+          data = raw
+            ? (JSON.parse(raw) as { error?: string; code?: string })
+            : null;
         } catch {}
-        setEmailErrorMessage(
-          parsed?.error ?? "Произошла ошибка (500). Повторите позже."
-        );
+
+        if (response.status === 409 || data?.code === "DUPLICATE_EMAIL") {
+          // уже подписан — не считаем это «ошибкой сервера»
+          setEmailErrorMessage(data?.error || "Вы уже подписаны на рассылку");
+        } else if (response.status === 400) {
+          setEmailErrorMessage(data?.error || "Некорректные данные");
+        } else {
+          setEmailErrorMessage(
+            data?.error || "Произошла ошибка. Повторите позже."
+          );
+        }
       }
-    } catch (error) {
-      console.error("Ошибка при отправке:", error);
-      setEmailErrorMessage("Произошла ошибка при отправке");
     } finally {
       setIsLoading(false);
     }
@@ -124,11 +129,11 @@ const DownloadPage = () => {
       >
         <motion.div
           variants={itemVariants}
-          className="bg-[var(--bg-secondary)]/80 backdrop-blur-md rounded-2xl p-8 border border-[var(--text-tertiary)]/30"
+          className="bg-[var(--bg-secondary)]/80 backdrop-blur-md rounded-2xl p-6 border border-[var(--text-tertiary)]/30"
         >
           <motion.h1
             variants={itemVariants}
-            className="text-4xl font-bold bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] bg-clip-text text-transparent mb-6"
+            className="text-8xl md:text-8xl lg:text-[8rem] font-black text-gray-900 mb-2 tracking-tight"
           >
             DOCIM
           </motion.h1>

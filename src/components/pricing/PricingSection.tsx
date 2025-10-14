@@ -14,7 +14,6 @@ import {
   DialogTrigger,
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
-import { apiUrl } from "@/shared/lib/api";
 import { validateEmail } from "@/shared/utils/validate";
 
 const PricingSection = () => {
@@ -116,7 +115,7 @@ const PricingSection = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch(apiUrl("/api/pricing"), {
+      const response = await fetch("/api/pricing.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

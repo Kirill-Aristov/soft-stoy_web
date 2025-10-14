@@ -1,40 +1,53 @@
 <?php
-// public/api/pricing.php
 require_once __DIR__ . '/config.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  json_response(['error' => 'Method Not Allowed'], 405);
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
 }
 
-$data = read_json();
-$email = isset($data['email']) ? trim($data['email']) : '';
-$name = isset($data['name']) ? trim($data['name']) : '';
-$phone = isset($data['phone']) ? trim($data['phone']) : '';
+try {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        json_response(['error' => 'Method Not Allowed'], 405);
+        exit;
+    }
 
-if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  json_response(['error' => 'Некорректный email'], 400);
+    $data = read_json_body();
+    $email = trim($data['email'] ?? '');
+    $name  = trim($data['name']  ?? '');
+    $phone = trim($data['phone'] ?? '');
+
+    if (!is_valid_email($email)) {
+        json_response(['error' => 'Некорректный email'], 400);
+        exit;
+    }
+
+    $subject = SUBJECT_PREFIX . ' · Запрос тарифа';
+    $lines = [
+        'Новая заявка на тариф:',
+        'Имя: ' . $name,
+        'Телефон: ' . $phone,
+        'Email: ' . $email,
+    ];
+    $body = implode("\n", $lines);
+
+    $ok = send_plain_mail(MAIL_TO, $subject, $body, $email);
+    if (!$ok) {
+        log_message('pricing.php: mail() failed');
+        json_response(['error' => 'Не удалось отправить письмо'], 500);
+        exit;
+    }
+
+    json_response(['ok' => true]);
+} catch (InvalidArgumentException $e) {
+    json_response(['error' => 'Некорректные данные'], 400);
+} catch (Throwable $e) {
+    log_message('pricing.php: ' . $e->getMessage());
+    json_response(['error' => 'Внутренняя ошибка сервера'], 500);
 }
-
-// Простая отправка письма через mail() на shared-хостинге
-$subject = 'Запрос на связь по тарифам DOCIM';
-$body = "Email: {$email}\nИмя: " . ($name ?: '-') . "\nТелефон: " . ($phone ?: '-') . "\nДата: " . date('Y-m-d H:i:s');
-
-$headers = [];
-if (defined('MAIL_FROM') && MAIL_FROM) {
-  $headers[] = 'From: ' . MAIL_FROM;
-  $headers[] = 'Reply-To: ' . $email;
-}
-$headers[] = 'Content-Type: text/plain; charset=utf-8';
-
-$ok = false;
-if (defined('MAIL_TO') && MAIL_TO) {
-  $ok = @mail(MAIL_TO, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, implode("\r\n", $headers));
-}
-
-if (!$ok) {
-  json_response(['error' => 'Не удалось отправить письмо'], 500);
-}
-
-json_response(['success' => true, 'message' => 'Заявка отправлена']);
 
 
