@@ -74,7 +74,7 @@ function encode_header(string $text): string {
 
 // ---------- БД (MySQL) ----------
 // ЗАПОЛНИТЕ доступы к БД вашего виртуального хостинга Timeweb
-const DB_HOST = "vh452.timeweb.ru";   // например, localhost
+const DB_HOST = "localhost";   // например, localhost или vh452.timeweb.ru
 const DB_PORT = 3306;           // порт MySQL
 const DB_NAME = "cr00383_web";     // имя базы
 const DB_USER = "cr00383_web";     // пользователь
@@ -93,32 +93,22 @@ function db(): PDO {
     return $pdo;
 }
 
+// Имя таблицы подписчиков (по требованию — users)
+const SUBSCRIBERS_TABLE = 'users';
+
 function ensure_subscribers_table(PDO $pdo): void {
     // создаём с колонкой created_at (только три поля: id, email, created_at)
     $pdo->exec(
-        'CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+        'CREATE TABLE IF NOT EXISTS ' . SUBSCRIBERS_TABLE . ' (
             id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             email VARCHAR(255) NOT NULL UNIQUE,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4'
     );
-
-    // миграция: если ранее была колонка `date` — переименовать в created_at
-    try {
-        $stmt = $pdo->prepare("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'newsletter_subscribers' AND COLUMN_NAME IN ('created_at','date')");
-        $stmt->execute();
-        $cols = array_map(static fn($r) => $r['COLUMN_NAME'], $stmt->fetchAll());
-        if (in_array('date', $cols, true) && !in_array('created_at', $cols, true)) {
-            $pdo->exec("ALTER TABLE newsletter_subscribers CHANGE `date` created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP");
-        }
-    } catch (Throwable $e) {
-        // не критично для работы
-        log_message('migrate_subscribers_table error: ' . $e->getMessage());
-    }
 }
 
 function insert_subscriber(PDO $pdo, string $email): void {
-    $stmt = $pdo->prepare('INSERT INTO newsletter_subscribers (email) VALUES (?)');
+    $stmt = $pdo->prepare('INSERT INTO ' . SUBSCRIBERS_TABLE . ' (email) VALUES (?)');
     $stmt->execute([$email]);
 }
 

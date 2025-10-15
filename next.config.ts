@@ -13,6 +13,19 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Добавить для лучшего SEO
+  trailingSlash: true, // добавляет слеш в конце URL
+  generateEtags: false, // отключает ETags для статического экспорта
+
+  // Опционально: для генерации sitemap.xml автоматически
+  async rewrites() {
+    return [
+      {
+        source: "/sitemap.xml",
+        destination: "/api/sitemap",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

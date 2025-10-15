@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/shared/ui/button";
 import { smoothScrollTo } from "@/shared/lib/utils";
 import {
@@ -11,60 +11,141 @@ import {
   SheetTrigger,
   SheetDescription,
 } from "@/shared/ui/sheet";
-import { useRouter } from "next/navigation";
+import { usePageContext } from "@/shared/context/PageContext";
 import { Menu } from "lucide-react";
 
 const Header = () => {
-  const router = useRouter();
-  const items = [
-    {
-      title: "Преимущества",
-      href: "",
-      sectionId: "advantages",
-    },
-    {
-      title: "Тарифы",
-      href: "",
-      sectionId: "pricing",
-    },
-    {
-      title: "Скачать",
-      href: "/download",
-      sectionId: "",
-    },
-    {
-      title: "Контакты",
-      href: "",
-      sectionId: "contacts",
-    },
-  ];
+  const { currentPage, setCurrentPage } = usePageContext();
+  const items = useMemo(
+    () => [
+      {
+        title: "Главная",
+        href: "",
+        sectionId: "home",
+      },
+      {
+        title: "Преимущества",
+        href: "",
+        sectionId: "advantages",
+      },
+      {
+        title: "Тарифы",
+        href: "",
+        sectionId: "pricing",
+      },
+      {
+        title: "Скачать",
+        href: "",
+        sectionId: "download",
+      },
+      {
+        title: "Контакты",
+        href: "",
+        sectionId: "contacts",
+      },
+    ],
+    []
+  );
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
+
+      // Определяем активную секцию при скролле только на главной странице
+      if (currentPage === "home") {
+        const sections = items
+          .filter(
+            (item) =>
+              item.sectionId &&
+              item.sectionId !== "download" &&
+              item.sectionId !== "home"
+          )
+          .map((item) => ({
+            id: item.sectionId,
+            element: document.getElementById(item.sectionId),
+          }))
+          .filter((section) => section.element);
+
+        const scrollPosition = window.scrollY + 100;
+        const documentHeight = document.documentElement.scrollHeight;
+        const windowHeight = window.innerHeight;
+
+        // Если пользователь в самом начале страницы, активируем главную
+        if (scrollPosition < 200) {
+          setActiveSection("home");
+        }
+        // Если пользователь доскроллил почти до конца страницы, активируем последнюю секцию
+        else if (scrollPosition + windowHeight >= documentHeight - 50) {
+          const lastSection = sections[sections.length - 1];
+          if (lastSection) {
+            setActiveSection(lastSection.id);
+          }
+        } else {
+          // Обычная логика определения активной секции
+          for (let i = sections.length - 1; i >= 0; i--) {
+            const section = sections[i];
+            if (
+              section.element &&
+              section.element.offsetTop <= scrollPosition
+            ) {
+              setActiveSection(section.id);
+              break;
+            }
+          }
+        }
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [currentPage, items]);
 
   const scrollToSection = (sectionId: string) => {
-    console.log(`Scrolling to section: ${sectionId}`);
-    smoothScrollTo(sectionId, 100);
+    if (sectionId === "download") {
+      setCurrentPage("download");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setIsMenuOpen(false);
+      return;
+    }
+
+    if (sectionId === "home") {
+      setCurrentPage("home");
+      setActiveSection("home");
+      // Прокручиваем к началу страницы
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setIsMenuOpen(false);
+      return;
+    }
+
+    // Если мы не на главной странице, сначала переключаемся на неё
+    if (currentPage !== "home") {
+      setCurrentPage("home");
+      // Ждем немного, чтобы компоненты успели отрендериться
+      setTimeout(() => {
+        smoothScrollTo(sectionId, 100);
+      }, 100);
+    } else {
+      console.log(`Scrolling to section: ${sectionId}`);
+      smoothScrollTo(sectionId, 100);
+    }
     setIsMenuOpen(false);
   };
 
-  const handleDownloadClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    // Добавляем класс для анимации выхода
-    document.body.classList.add("page-transition-exit");
-
-    setTimeout(() => {
-      router.push("/download");
-    }, 300);
+  const isActiveTab = (item: (typeof items)[0]) => {
+    if (item.sectionId === "download") {
+      return currentPage === "download";
+    }
+    if (item.sectionId === "home") {
+      return (
+        currentPage === "home" &&
+        (activeSection === "" || activeSection === "home")
+      );
+    }
+    return currentPage === "home" && activeSection === item.sectionId;
   };
 
   return (
@@ -78,7 +159,10 @@ const Header = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Логотип */}
-          <div className="text-2xl font-bold text-[var(--text-white)] cursor-pointer">
+          <div
+            onClick={() => scrollToSection("home")}
+            className="text-2xl font-bold text-[var(--text-white)] cursor-pointer hover:text-[var(--accent-primary)] transition-colors"
+          >
             DOCIM
           </div>
 
@@ -86,27 +170,17 @@ const Header = () => {
           <nav className="hidden md:flex items-center space-x-8">
             {items.map((item) => (
               <div key={item.title}>
-                {item.href ? (
-                  <Button
-                    variant="ghost"
-                    onClick={
-                      item.href === "/download"
-                        ? handleDownloadClick
-                        : undefined
-                    }
-                    className="text-[var(--text-white)] hover:text-[var(--accent-primary)] hover:bg-transparent cursor-pointer"
-                  >
-                    {item.title}
-                  </Button>
-                ) : (
-                  <Button
-                    variant="ghost"
-                    onClick={() => scrollToSection(item.sectionId)}
-                    className="text-[var(--text-white)] hover:text-[var(--accent-primary)] hover:bg-transparent cursor-pointer"
-                  >
-                    {item.title}
-                  </Button>
-                )}
+                <Button
+                  variant="ghost"
+                  onClick={() => scrollToSection(item.sectionId)}
+                  className={`cursor-pointer transition-colors ${
+                    isActiveTab(item)
+                      ? "text-white bg-[var(--accent-primary)]/20 hover:bg-[var(--accent-primary)]/30"
+                      : "text-white hover:text-white hover:bg-[var(--accent-primary)]/10"
+                  }`}
+                >
+                  {item.title}
+                </Button>
               </div>
             ))}
           </nav>
@@ -118,7 +192,7 @@ const Header = () => {
                 <Button
                   variant="ghost"
                   size="lg"
-                  className="text-[var(--text-white)] hover:text-[var(--accent-primary)] cursor-pointer h-12 w-12 relative"
+                  className="text-white hover:text-white hover:bg-[var(--accent-primary)]/10 cursor-pointer h-12 w-12 relative"
                 >
                   <Menu className="h-6 w-6 relative" />
                 </Button>
@@ -138,27 +212,17 @@ const Header = () => {
                 <div className="flex flex-col space-y-4 mt-6">
                   {items.map((item) => (
                     <div key={item.title} className="w-full">
-                      {item.href ? (
-                        <Button
-                          variant="ghost"
-                          onClick={
-                            item.href === "/download"
-                              ? handleDownloadClick
-                              : () => setIsMenuOpen(false)
-                          }
-                          className="text-[var(--text-white)] hover:text-[var(--accent-primary)] hover:bg-[var(--text-white)]/10 justify-start text-left h-12 w-full"
-                        >
-                          {item.title}
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="ghost"
-                          onClick={() => scrollToSection(item.sectionId)}
-                          className="text-[var(--text-white)] hover:text-[var(--accent-primary)] hover:bg-[var(--text-white)]/10 justify-start text-left h-12 w-full"
-                        >
-                          {item.title}
-                        </Button>
-                      )}
+                      <Button
+                        variant="ghost"
+                        onClick={() => scrollToSection(item.sectionId)}
+                        className={`justify-start text-left h-12 w-full transition-colors ${
+                          isActiveTab(item)
+                            ? "text-white bg-[var(--accent-primary)]/20 hover:bg-[var(--accent-primary)]/30"
+                            : "text-white hover:text-white hover:bg-[var(--accent-primary)]/10"
+                        }`}
+                      >
+                        {item.title}
+                      </Button>
                     </div>
                   ))}
                 </div>

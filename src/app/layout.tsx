@@ -17,18 +17,71 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title:
-    "DOCIM - Инновационная платформа для управления проектной документацией",
+  title: {
+    default: "DOCIM - Система управления строительной документацией",
+    template: "%s | DOCIM",
+  },
   description:
-    "Современная платформа для автоматизации процессов создания, согласования и контроля разработки проектной документации",
-  keywords:
-    "инженерные проекты, проектная документация, автоматизация, DOCIM, строительная документация, электронный документооборот",
+    "Профессиональная платформа для автоматизации процессов создания, согласования и контроля разработки строительной документации. Интегрированное решение для архитекторов, инженеров и строительных компаний.",
+  keywords: [
+    "строительная документация",
+    "проектная документация",
+    "автоматизация строительства",
+    "DOCIM",
+    "электронный документооборот",
+    "инженерные проекты",
+    "строительное проектирование",
+    "управление проектами",
+    "CAD системы",
+    "BIM технологии",
+  ],
   authors: [{ name: "ООО СофтСтрой Проект" }],
+  creator: "ООО СофтСтрой Проект",
+  publisher: "ООО СофтСтрой Проект",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    url: "https://soft-stroypro.ru/",
+    siteName: "DOCIM",
+    title: "DOCIM - Система управления строительной документацией",
+    description:
+      "Профессиональная платформа для автоматизации процессов создания, согласования и контроля разработки строительной документации.",
+  },
+  twitter: {
+    card: "summary",
+    title: "DOCIM - Система управления строительной документацией",
+    description:
+      "Профессиональная платформа для автоматизации процессов создания, согласования и контроля разработки строительной документации.",
+  },
+  alternates: {
+    canonical: "https://soft-stroypro.ru/",
+  },
+  icons: {
+    icon: "/ico.ico",
+    shortcut: "/ico.ico",
+    apple: "/ico.ico",
+  },
+  manifest: "/site.webmanifest",
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
 };
 
 export default function RootLayout({

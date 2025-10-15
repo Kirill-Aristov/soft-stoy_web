@@ -1,29 +1,41 @@
+"use client";
+
 import AdvantagesSection from "@/components/advantages/AdvantagesSection";
-import Header from "@/components/header/header";
 import PricingSection from "@/components/pricing/PricingSection";
-import Footer from "@/components/footer/footer";
 import HeroContent from "@/components/main/HeroContent";
+import DownloadPage from "@/components/download/download-page";
+import AppLayout from "@/components/layout/AppLayout";
+import StructuredData from "@/components/seo/StructuredData";
+import { PageProvider, usePageContext } from "@/shared/context/PageContext";
+
+const HomeContent = () => {
+  const { currentPage } = usePageContext();
+
+  if (currentPage === "download") {
+    return <DownloadPage />;
+  }
+
+  return (
+    <>
+      {/* Герой-секция */}
+      <HeroContent />
+
+      {/* Преимущества */}
+      <AdvantagesSection />
+
+      {/* Тарифные планы */}
+      <PricingSection />
+    </>
+  );
+};
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      {/* Навигация */}
-      <Header />
-
-      {/* Основной контент */}
-      <main>
-        {/* Герой-секция */}
-        <HeroContent />
-
-        {/* Преимущества */}
-        <AdvantagesSection />
-
-        {/* Тарифные планы */}
-        <PricingSection />
-      </main>
-
-      {/* Футер */}
-      <Footer />
-    </div>
+    <PageProvider>
+      <StructuredData />
+      <AppLayout>
+        <HomeContent />
+      </AppLayout>
+    </PageProvider>
   );
 }

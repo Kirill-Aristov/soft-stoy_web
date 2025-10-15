@@ -59,7 +59,7 @@ const Footer = () => {
                 variants={itemVariants}
                 className="flex items-start gap-3"
               >
-                <Building className="w-5 h-5 text-[var(--accent-primary)] mt-1 flex-shrink-0" />
+                <Building className="w-5 h-5 text-white mt-1 flex-shrink-0" />
                 <div>
                   <div className="text-[var(--text-white)] font-medium">
                     ООО &quot;СофтСтрой Проект&quot;
@@ -74,7 +74,7 @@ const Footer = () => {
                 variants={itemVariants}
                 className="flex items-center gap-3"
               >
-                <Mail className="w-5 h-5 text-[var(--accent-primary)] flex-shrink-0" />
+                <Mail className="w-5 h-5 text-white flex-shrink-0" />
                 <motion.a
                   href="mailto:info_docim@soft-stroypro.ru"
                   whileHover={{ scale: 1.05 }}
@@ -88,7 +88,7 @@ const Footer = () => {
                 variants={itemVariants}
                 className="flex items-start gap-3"
               >
-                <Clock className="w-5 h-5 text-[var(--accent-primary)] mt-1 flex-shrink-0" />
+                <Clock className="w-5 h-5 text-white mt-1 flex-shrink-0" />
                 <div>
                   <div className="text-[var(--text-white)]/90">
                     Пн-Пт: 9:00 - 20:00 (МСК)

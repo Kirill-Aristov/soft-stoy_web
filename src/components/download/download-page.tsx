@@ -4,14 +4,20 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/shared/ui/button";
-import { smoothPageTransition } from "@/shared/lib/utils";
 import { validateEmail } from "@/shared/utils/validate";
+import { usePageContext } from "@/shared/context/PageContext";
 
 const DownloadPage = () => {
+  const { setCurrentPage } = usePageContext();
   const [email, setEmail] = useState("");
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAlreadySubscribed, setIsAlreadySubscribed] = useState(false);
+
+  const handleBackClick = () => {
+    setCurrentPage("home");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,42 +31,47 @@ const DownloadPage = () => {
     setEmailErrorMessage("");
 
     try {
+      const requestData = { email };
+
       const response = await fetch("/api/subscribe.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify(requestData),
       });
-      if (response.ok) {
+
+      const raw = await response.text();
+      let data: { ok?: boolean; error?: string; code?: string } | null = null;
+
+      try {
+        data = raw ? JSON.parse(raw) : null;
+      } catch {
+        throw new Error("Invalid JSON response");
+      }
+
+      // Проверяем успешный ответ
+      if (response.ok && data?.ok) {
+        setIsAlreadySubscribed(false);
+        setIsSubmitted(true);
+      } else if (response.status === 409 || data?.code === "DUPLICATE_EMAIL") {
+        // Дублирование email
+        setIsAlreadySubscribed(true);
+        setEmailErrorMessage("");
         setIsSubmitted(true);
       } else {
-        // безопасный парсинг тела ответа
-        const raw = await response.text();
-        let data: { error?: string; code?: string } | null = null;
-        try {
-          data = raw
-            ? (JSON.parse(raw) as { error?: string; code?: string })
-            : null;
-        } catch {}
-
-        if (response.status === 409 || data?.code === "DUPLICATE_EMAIL") {
-          // уже подписан — не считаем это «ошибкой сервера»
-          setEmailErrorMessage(data?.error || "Вы уже подписаны на рассылку");
-        } else if (response.status === 400) {
-          setEmailErrorMessage(data?.error || "Некорректные данные");
-        } else {
-          setEmailErrorMessage(
-            data?.error || "Произошла ошибка. Повторите позже."
-          );
-        }
+        // Другие ошибки
+        setEmailErrorMessage(
+          data?.error || "Произошла ошибка. Повторите позже."
+        );
       }
+    } catch (error) {
+      setEmailErrorMessage(
+        "Произошла ошибка сети. Проверьте подключение к интернету."
+      );
     } finally {
       setIsLoading(false);
     }
-  };
-  const handleBackClick = () => {
-    smoothPageTransition("/");
   };
 
   const containerVariants = {
@@ -102,13 +113,13 @@ const DownloadPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--bg-secondary)] via-[var(--bg-tertiary)] to-[var(--bg-secondary)] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--bg-secondary)] via-[var(--bg-tertiary)] to-[var(--bg-secondary)] flex items-center justify-center px-4 py-20">
       {/* Кнопка назад */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2 }}
-        className="fixed top-6 left-6 z-10"
+        className="fixed top-20 left-6 z-10"
       >
         <motion.button
           onClick={handleBackClick}
@@ -205,14 +216,17 @@ const DownloadPage = () => {
                 variants={itemVariants}
                 className="text-xl font-semibold text-[var(--text-primary)] mb-2"
               >
-                Спасибо за интерес!
+                {isAlreadySubscribed
+                  ? "Вы уже подписаны на нас"
+                  : "Спасибо за интерес!"}
               </motion.h3>
               <motion.p
                 variants={itemVariants}
                 className="text-[var(--text-secondary)]"
               >
-                Мы отправим вам уведомление, как только продукт будет готов к
-                релизу.
+                {isAlreadySubscribed
+                  ? "Этот email уже подписан на рассылку"
+                  : "Мы отправим вам уведомление, как только продукт будет готов к релизу"}
               </motion.p>
             </motion.div>
           )}

@@ -1,0 +1,16 @@
+{
+  "name": "DOCIM - Система управления строительной документацией",
+  "short_name": "DOCIM",
+  "description": "Профессиональная платформа для автоматизации процессов создания, согласования и контроля разработки строительной документации",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/ico.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

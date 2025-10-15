@@ -27,32 +27,25 @@ try {
     // БД: создаём таблицу и пытаемся вставить подписчика
     $pdo = db();
     ensure_subscribers_table($pdo);
+    
     try {
         insert_subscriber($pdo, $email);
+        log_message('subscribe.php: Успешная подписка: ' . $email);
+        json_response(['ok' => true]);
     } catch (Throwable $e) {
         if (is_pdo_duplicate_exception($e)) {
+            log_message('subscribe.php: Дублирование email: ' . $email);
             json_response(['error' => 'Вы уже подписаны на рассылку', 'code' => 'DUPLICATE_EMAIL'], 409);
             exit;
         }
         throw $e;
     }
 
-    // Письмо-уведомление (не обязательно, но полезно)
-    $subject = SUBJECT_PREFIX . ' · Новая подписка';
-    $body = "Email подписчика: {$email}";
-    $ok = send_plain_mail(MAIL_TO, $subject, $body, $email);
-    if (!$ok) {
-        log_message('subscribe.php: mail() failed');
-        // подписка сохранена, письмо не отправилось — не считаем ошибкой для пользователя
-        json_response(['ok' => true, 'warning' => 'Подписка сохранена, но письмо не отправлено']);
-        exit;
-    }
-
-    json_response(['ok' => true]);
 } catch (InvalidArgumentException $e) {
+    log_message('subscribe.php: Некорректные данные: ' . $e->getMessage());
     json_response(['error' => 'Некорректные данные'], 400);
 } catch (Throwable $e) {
-    log_message('subscribe.php: ' . $e->getMessage());
+    log_message('subscribe.php: Ошибка сервера: ' . $e->getMessage());
     json_response(['error' => 'Внутренняя ошибка сервера'], 500);
 }
 

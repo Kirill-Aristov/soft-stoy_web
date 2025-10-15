@@ -15,7 +15,9 @@ export function smoothScrollTo(elementId: string, offset: number = 100) {
     // Попробуем найти элемент через querySelector
     const altElement = document.querySelector(`[id="${elementId}"]`);
     if (!altElement) {
-      console.error(`Element with id "${elementId}" not found anywhere`);
+      console.warn(
+        `Element with id "${elementId}" not found anywhere - skipping scroll`
+      );
       return;
     }
     console.log(`Found element using querySelector: ${elementId}`);

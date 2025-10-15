@@ -2,17 +2,23 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { usePageContext } from "@/shared/context/PageContext";
 
 const HeroContent = () => {
+  const { setCurrentPage } = usePageContext();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
+  const handleDownloadClick = () => {
+    setCurrentPage("download");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-white via-gray-50 to-gray-100">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[var(--bg-secondary)] via-[var(--bg-tertiary)] to-[var(--bg-secondary)]">
       {/* Основной контент */}
       <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
         {/* Главный заголовок */}
@@ -57,11 +63,12 @@ const HeroContent = () => {
           style={{ willChange: "transform, opacity" }}
         >
           <motion.button
+            onClick={handleDownloadClick}
             className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
-            <Link href="/download">Скачать программу</Link>
+            Скачать программу
           </motion.button>
         </motion.div>
       </div>
